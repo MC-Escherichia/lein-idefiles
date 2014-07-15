@@ -1,29 +1,19 @@
 (ns leiningen.new.ide-files.eclipse
-  (:require [leiningen.new.ide-files.util :as util]
-            [clojure.pprint :as pp])
-
+  (:require [leiningen.new.ide-files.util :as util])
   (:use [leiningen.new.templates :only [renderer sanitize]]))
 
 
 (def render (renderer "ide_files/eclipse"))
 
-(defn echo
-  "Print and return the argument. Use for debugging."
-  [x]
-  (println "---------------")
-  (pp/pprint x)
-  x)
 
 (defn eclipse
-  [{:keys [group name classpath-jars all-source-paths compile-path]
+  [{:keys [group name classpath-jars all-source-paths]
     :as argmap}]
   (util/announce "Eclipse" name)
   (let [data {:name name
               :sanitized (sanitize name)
               :classpath-jars classpath-jars
-              :source-dirs all-source-paths
-              :compile-paths compile-path
-              }
+              :source-dirs all-source-paths}
   	r #(render % data)]
     (util/files data
       [".classpath" (r "classpath")]

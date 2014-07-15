@@ -1,5 +1,5 @@
 (ns leiningen.new.ide-files.util
-  (:use [leiningen.new.templates :only [*dir* ->files *force?* ]]))
+  (:use [leiningen.new.templates :only [*dir* ->files]]))
 
 
 (defn announce
@@ -9,6 +9,5 @@
 
 (defn files
   [data & paths]
-  (binding [*dir* "."
-            *force?* true]
+  (binding [*dir* "."]
     (apply ->files data paths)))
